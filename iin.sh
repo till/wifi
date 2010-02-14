@@ -1,5 +1,10 @@
 #/usr/bin/env bash
 
+#
+# Eine "Anleitung" von Ulf Kypke um Kamikaze images mit Luci-Weboberflaeche zu
+# basteln.
+#
+
 BUILDDIR=/tmp/openwrt
 OS=`uname -v`
 
