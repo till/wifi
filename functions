@@ -21,7 +21,7 @@ function build_openwrt {
     cd ${BUILDDIR}/trunk
 
     make menuconfig
-    make
+    make FORCE=1
 
     cp feeds.conf.default feeds.conf
     scripts/feeds update
@@ -29,8 +29,7 @@ function build_openwrt {
     make package/symlinks
 
     make menuconfig
-
-    make
+    make FORCE=1
 }
 
 function show_result {
