@@ -13,12 +13,12 @@ OS=`uname -v`
 case "$OS" in
 
     *Ubuntu*)
-        apt-get update
+        #apt-get update
         ubuntu_deps
     ;;
 
     *Debian*)
-        apt-get update
+        #apt-get update
         debian_deps
     ;;
 
