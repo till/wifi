@@ -10,8 +10,6 @@ source ./functions
 BUILDDIR=/tmp/openwrt
 OS=`uname -v`
 
-setenv FORCE 1
-
 case "$OS" in
 
     *Ubuntu*)
@@ -34,5 +32,3 @@ esac
 get_openwrt
 build_openwrt
 show_result
-
-unsetenv FORCE
