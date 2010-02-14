@@ -1,11 +1,13 @@
 #/usr/bin/env bash
 
+BUILDDIR=/tmp/openwrt
 OS=`uname -v`
 
 case "$OS" in
 
     *Ubuntu*)
 
+        apt-get update
         apt-get install -y subversion build-essential binutils flex bison autoconf gettext
         apt-get install -y texinfo sharutils subversion ncurses-dev zlib1g-dev
         apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
@@ -13,6 +15,7 @@ case "$OS" in
 
     *Debian*)
 
+        apt-get update
         apt-get install -y subversion build-essential binutils flex bison autoconf gettext
         apt-get install -y texinfo sharutils subversion libncurses5-dev zlib1g-dev
         apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
@@ -30,12 +33,13 @@ esac
 
 get_openwrt
 build_openwrt
+show
 
 function get_openwrt {
-    mkdir /tmp/openwrt
-    cd /tmp/openwrt
+    mkdir -p ${BUILDDIR}
+    cd ${BUILDDIR}
     svn co svn://svn.openwrt.org/openwrt/trunk
-    cd trunk
+    cd ${BUILDDIR}/trunk
 }
 
 function build_openwrt {
@@ -50,4 +54,9 @@ function build_openwrt {
     make menuconfig
 
     make
+}
+
+function show {
+    ls -l ${BUILDDIR}/bin/
+    ls -l ${BUILDDIR}/bin/packages/
 }
