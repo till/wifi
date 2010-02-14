@@ -1,0 +1,39 @@
+function ubuntu_deps {
+    apt-get install -y subversion build-essential binutils flex bison autoconf gettext
+    apt-get install -y texinfo sharutils subversion ncurses-dev zlib1g-dev
+    apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
+}
+
+function debian_deps {
+    apt-get install -y subversion build-essential binutils flex bison autoconf gettext
+    apt-get install -y texinfo sharutils subversion libncurses5-dev zlib1g-dev
+    apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
+}
+
+function get_openwrt {
+    mkdir -p ${BUILDDIR}
+    cd ${BUILDDIR}
+    svn co svn://svn.openwrt.org/openwrt/trunk
+}
+
+function build_openwrt {
+
+    cd ${BUILDDIR}/trunk
+
+    make menuconfig
+    make
+
+    cp feeds.conf.default feeds.conf
+    scripts/feeds update
+
+    make package/symlinks
+
+    make menuconfig
+
+    make
+}
+
+function show_result {
+    ls -l ${BUILDDIR}/bin/
+    ls -l ${BUILDDIR}/bin/packages/
+}

@@ -1,67 +1,38 @@
-#/usr/bin/env bash
+#!/bin/bash
 
 #
 # Eine "Anleitung" von Ulf Kypke um Kamikaze images mit Luci-Weboberflaeche zu
 # basteln.
 #
 
+source ./functions
+
 BUILDDIR=/tmp/openwrt
 OS=`uname -v`
+
+setenv FORCE 1
 
 case "$OS" in
 
     *Ubuntu*)
-
         apt-get update
-        apt-get install -y subversion build-essential binutils flex bison autoconf gettext
-        apt-get install -y texinfo sharutils subversion ncurses-dev zlib1g-dev
-        apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
+        ubuntu_deps
     ;;
 
     *Debian*)
-
         apt-get update
-        apt-get install -y subversion build-essential binutils flex bison autoconf gettext
-        apt-get install -y texinfo sharutils subversion libncurses5-dev zlib1g-dev
-        apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
-
+        debian_deps
     ;;
 
     *)
-
         echo "Unknown OS: ${OS}"
         exit 1;
-
     ;;
 
 esac
 
 get_openwrt
 build_openwrt
-show
+show_result
 
-function get_openwrt {
-    mkdir -p ${BUILDDIR}
-    cd ${BUILDDIR}
-    svn co svn://svn.openwrt.org/openwrt/trunk
-    cd ${BUILDDIR}/trunk
-}
-
-function build_openwrt {
-    make menuconfig
-    make
-
-    cp feeds.conf.default feeds.conf
-    scripts/feeds update
-
-    make package/symlinks
-
-    make menuconfig
-
-    make
-}
-
-function show {
-    ls -l ${BUILDDIR}/bin/
-    ls -l ${BUILDDIR}/bin/packages/
-}
+unsetenv FORCE
