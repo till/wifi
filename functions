@@ -1,13 +1,13 @@
 function ubuntu_deps {
-    apt-get install -y subversion build-essential binutils flex bison autoconf gettext
-    apt-get install -y texinfo sharutils subversion ncurses-dev zlib1g-dev
-    apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
+    sudo apt-get install -y subversion build-essential binutils flex bison autoconf gettext
+    sudo apt-get install -y texinfo sharutils subversion ncurses-dev zlib1g-dev
+    sudo apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
 }
 
 function debian_deps {
-    apt-get install -y subversion build-essential binutils flex bison autoconf gettext
-    apt-get install -y texinfo sharutils subversion libncurses5-dev zlib1g-dev
-    apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
+    sudo apt-get install -y subversion build-essential binutils flex bison autoconf gettext
+    sudo apt-get install -y texinfo sharutils subversion libncurses5-dev zlib1g-dev
+    sudo apt-get install -y rsync gawk unzip screen mc rsync tcpdump net-tools tftpd
 }
 
 function get_openwrt {
@@ -21,7 +21,7 @@ function build_openwrt {
     cd ${BUILDDIR}/trunk
 
     make menuconfig
-    make FORCE=1
+    make
 
     cp feeds.conf.default feeds.conf
     scripts/feeds update
@@ -29,7 +29,7 @@ function build_openwrt {
     make package/symlinks
 
     make menuconfig
-    make FORCE=1
+    make
 }
 
 function show_result {
